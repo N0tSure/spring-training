@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = "classpath:sound-system.xml")
 @ActiveProfiles("hardDaysNight")
 public class CDPlayerTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CDPlayerTest.class);
+
     @Rule
     public final SystemOutRule rule = new SystemOutRule().enableLog();
 
@@ -38,8 +42,7 @@ public class CDPlayerTest {
 
     @Test
     public void spellTest() throws Exception {
-        System.out.println(value.getClass().getSimpleName() + " : " + value);
-
+        LOGGER.info(value.getClass().getSimpleName() + " : " + value);
     }
 
     @Test
