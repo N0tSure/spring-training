@@ -16,7 +16,6 @@ public class RevolverCondition implements Condition {
     @Override
     public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
         Environment environment = conditionContext.getEnvironment();
-        System.out.println("Found property 'revolver': " + environment.containsProperty("revolver.show"));
         return environment.containsProperty("revolver.show");
     }
 }
