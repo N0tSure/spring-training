@@ -2,6 +2,8 @@ package soundsystem;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,6 +19,7 @@ import soundsystem.dessert.annotations.Fruity;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DessertConfig.class)
 public class DessertTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DessertTest.class);
 
     @Autowired
     @Cold
@@ -25,6 +28,6 @@ public class DessertTest {
 
     @Test
     public void ambiguousTest() throws Exception {
-        System.out.println(dessert.tasty());
+        LOGGER.info(dessert.tasty());
     }
 }
