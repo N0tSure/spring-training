@@ -1,5 +1,7 @@
 package soundsystem;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
  * Created by cresh on 13.01.17.
  */
 public class BlankDisc implements CompactDisk {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BlankDisc.class);
     private String title;
 
     @Value("${white.artist}")
@@ -24,11 +27,8 @@ public class BlankDisc implements CompactDisk {
 
     @Override
     public void play() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("Playing %1$s by %2$s\n", title, artist));
-        tracks.forEach(track ->
-                builder.append(String.format("-Track: %s\n", track)));
-        System.out.println(builder.toString());
+        LOGGER.info("Playing {} by {}", title, artist);
+        tracks.forEach(track -> LOGGER.info("Track: {}", track));
     }
 
     public void setTitle(String title) {

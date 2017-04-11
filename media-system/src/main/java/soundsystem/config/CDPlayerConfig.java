@@ -1,5 +1,6 @@
 package soundsystem.config;
 
+import concert.Audience;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@EnableAspectJAutoProxy
+@ComponentScan(basePackages = {"concert"})
 @PropertySource("classpath:cd-config.properties")
 public class CDPlayerConfig {
 
@@ -43,7 +46,6 @@ public class CDPlayerConfig {
     @Bean
     @Conditional(RevolverCondition.class)
     public CompactDisk revolver() {
-        System.out.println("Instantiation of Revolver");
         BlankDisc revolver = new BlankDisc();
         revolver.setArtist(environment.getProperty("revolver.artist"));
         revolver.setTitle(environment.getProperty("revolver.title"));
@@ -70,4 +72,5 @@ public class CDPlayerConfig {
         ));
         return blankDisc;
     }
+
 }
