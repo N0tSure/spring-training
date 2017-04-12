@@ -1,7 +1,10 @@
 package concert;
 
+import org.junit.Rule;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,5 +61,11 @@ public class ConcertTest {
         assertEquals(0, counter.getPlayCount(0));
         assertEquals(3, counter.getPlayCount(1));
         assertEquals(2, counter.getPlayCount(2));
+    }
+
+    @Test
+    public void introduction() throws Exception {
+        ((Encoreable) theaterDrama).performEncore();
+        LOGGER.info("Test look like passed");
     }
 }
