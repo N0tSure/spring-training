@@ -34,9 +34,6 @@ public class CDPlayerTest {
     @Autowired
     private CompactDisk whiteAlbum;
 
-    @Autowired
-    private CompactDisk hardDaysNight;
-
     @Value("#{2 * T(Math).PI * 0.5}")
     private Object value;
 
