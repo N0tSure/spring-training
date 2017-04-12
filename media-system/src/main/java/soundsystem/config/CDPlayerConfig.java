@@ -14,6 +14,7 @@ import java.util.List;
 
 @Configuration
 @EnableAspectJAutoProxy
+@ImportResource("classpath:sound-system.xml")
 @ComponentScan(basePackages = {"concert"})
 @PropertySource("classpath:cd-config.properties")
 public class CDPlayerConfig {
@@ -34,13 +35,19 @@ public class CDPlayerConfig {
     @Profile("random")
     public CompactDisk randomDisk() {
         if (Math.random() > 0.5) return new SgtPepper();
-        else return new HardDaysNight();
+        else return new SgtPepper();
     }
 
     @Bean
-    @Profile("hardDaysNight")
-    public CompactDisk hardDaysNight() {
-        return new HardDaysNight();
+    public Controllable hardDaysNight() {
+        return new HardDaysNight(
+                "Hard Days Night",
+                "The Beatles",
+                Arrays.asList(
+                        "A Hard Day's Night",
+                        "I Should Have Known Better",
+                        "If I Fell"
+                ));
     }
 
     @Bean
