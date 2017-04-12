@@ -1,9 +1,7 @@
 package concert;
 
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,23 +16,38 @@ import org.springframework.stereotype.Component;
 public class Audience {
     private static final Logger LOGGER = LoggerFactory.getLogger(Audience.class);
 
-    @Before("execution(** concert.Performance.perform(..))")
+    @Pointcut("execution(** concert.Performance.perform(..)) && bean(woodStockFestival)")
+    public void performance() {}
+
+    @Before("performance()")
     public void silencePhones() {
         LOGGER.info("Silencing phones");
     }
 
-    @Before("execution(** concert.Performance.perform(..))")
+    @Before("performance()")
     public void takeSeats() {
         LOGGER.info("Taking seats");
     }
 
-    @AfterReturning("execution(** concert.Performance.perform(..))")
+    @AfterReturning("performance()")
     public void applause() {
         LOGGER.info("CLAP CLAP CLAP!!!");
     }
 
-    @AfterThrowing("execution(** concert.Performance.perform(..))")
+    @AfterThrowing("performance()")
     public void demandRefund() {
         LOGGER.info("Demanding refund");
+    }
+
+    @Around("execution(** concert.Performance.perform(..)) && bean(theaterDrama)")
+    public void watchDrama(ProceedingJoinPoint proceedingJoinPoint) {
+        try {
+            LOGGER.info("Silencing phone before drama");
+            LOGGER.info("Taking seats in theater");
+            proceedingJoinPoint.proceed();
+            LOGGER.info("[Applause]");
+        } catch (Throwable throwable) {
+            LOGGER.info("[Disappoint silence");
+        }
     }
 }
