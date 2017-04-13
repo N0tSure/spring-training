@@ -2,8 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:c="http://www.springframework.org/schema/c"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="sgtPepper" class="soundsystem.BlankDisc">
         <constructor-arg value="Sgt. Pepper's Lonely Hearts Club Band"/>
@@ -39,5 +46,46 @@
         c:_0-ref="sgtPepper"/>
 
     <bean class="soundsystem.config.CDPlayerConfig"/>
+
+    <bean class="concert.Audience" id="audience" />
+
+    <bean class="concert.TrackCounter" id="trackCounter" />
+
+    <bean class="concert.Encore" id="encore" />
+
+    <aop:config>
+
+        <aop:aspect ref="audience">
+            <aop:pointcut id="performance" expression="execution(** concert.Performance.perform(..))" />
+            <aop:before
+                pointcut-ref="performance"
+                method="silencePhones" />
+            <aop:before
+                pointcut-ref="performance"
+                method="takeSeats" />
+            <aop:after-returning
+                    pointcut-ref="performance"
+                    method="applause" />
+            <aop:after-throwing
+                    pointcut-ref="performance"
+                    method="demandRefund" />
+            <aop:around method="watchDrama" pointcut-ref="performance" />
+        </aop:aspect>
+
+        <aop:aspect ref="trackCounter">
+            <aop:pointcut
+                    id="trackPlayed"
+                    expression="execution(* soundsystem.Controllable.playTrack(int )) and args(trackNumber)" />
+            <aop:before pointcut-ref="trackPlayed" method="countTrack" />
+        </aop:aspect>
+
+        <aop:aspect>
+            <aop:declare-parents
+                    types-matching="concert.Performance+"
+                    implement-interface="concert.Encoreable"
+                    delegate-ref="encore" />
+        </aop:aspect>
+
+    </aop:config>
 
 </beans>

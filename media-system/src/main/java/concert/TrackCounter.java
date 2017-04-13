@@ -13,8 +13,6 @@ import java.util.Map;
  * Count tracks
  * @author Artemis A. Sirosh
  */
-@Aspect
-@Component
 public class TrackCounter {
     private Map<Integer, Integer> trackCount;
 
@@ -22,10 +20,8 @@ public class TrackCounter {
         trackCount = new HashMap<>();
     }
 
-    @Pointcut("execution(* soundsystem.Controllable.playTrack(int )) && args(trackNumber)")
     public void trackPlayed(int trackNumber) {}
 
-    @Before("trackPlayed(trackNumber)")
     public void countTrack(int trackNumber) {
         int currentCount = getPlayCount(trackNumber);
         trackCount.put(trackNumber, currentCount + 1);

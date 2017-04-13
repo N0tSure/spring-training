@@ -11,35 +11,27 @@ import org.springframework.stereotype.Component;
  * A performance isn’t a performance without an audience.
  * @author Artemis A. Sirosh
  */
-@Aspect
-@Component
 public class Audience {
     private static final Logger LOGGER = LoggerFactory.getLogger(Audience.class);
 
-    @Pointcut("execution(** concert.Performance.perform(..)) && bean(woodStockFestival)")
     public void performance() {}
 
-    @Before("performance()")
     public void silencePhones() {
         LOGGER.info("Silencing phones");
     }
 
-    @Before("performance()")
     public void takeSeats() {
         LOGGER.info("Taking seats");
     }
 
-    @AfterReturning("performance()")
     public void applause() {
         LOGGER.info("CLAP CLAP CLAP!!!");
     }
 
-    @AfterThrowing("performance()")
     public void demandRefund() {
         LOGGER.info("Demanding refund");
     }
 
-    @Around("execution(** concert.Performance.perform(..)) && bean(theaterDrama)")
     public void watchDrama(ProceedingJoinPoint proceedingJoinPoint) {
         try {
             LOGGER.info("Silencing phone before drama");
