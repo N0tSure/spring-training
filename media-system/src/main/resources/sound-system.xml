@@ -53,6 +53,10 @@
 
     <bean class="concert.Encore" id="encore" />
 
+    <bean class="concert.TheaterDrama" id="theaterDrama" />
+
+    <bean class="concert.WoodStockFestival" id="woodStockFestival" />
+
     <aop:config>
 
         <aop:aspect ref="audience">

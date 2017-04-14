@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
  *
  * @author Artemis A. Sirosh
  */
-@Component
 public class WoodStockFestival implements Performance {
     private static final Logger LOGGER = LoggerFactory.getLogger(WoodStockFestival.class);
 

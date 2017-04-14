@@ -11,7 +11,6 @@ import java.util.List;
 
 @Configuration
 @ImportResource("classpath:sound-system.xml")
-@ComponentScan(basePackages = {"concert"})
 @PropertySource("classpath:cd-config.properties")
 public class CDPlayerConfig {
 
