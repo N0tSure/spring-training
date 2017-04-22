@@ -22,9 +22,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class CDPlayerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(CDPlayerTest.class);
 
-    @Rule
-    public final SystemOutRule rule = new SystemOutRule().enableLog();
-
     @Autowired
     private CompactDisk revolver;
 
@@ -48,10 +45,4 @@ public class CDPlayerTest {
         whiteAlbum.play();
     }
 
-    @Test
-    public void playTest() {
-        String exp = "Playing Sgt. Pepper's Lonely Hearts Club Band by The Beatles\n";
-        realDisk.play();
-        Assert.assertTrue(rule.getLog().contains(exp));
-    }
 }
