@@ -33,6 +33,8 @@
 
     <build>
         <finalName>spittr</finalName>
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
