@@ -1,5 +1,6 @@
 package spittr.web;
 
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -43,17 +44,8 @@ public class SpittleControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("spittles"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("spittleList"))
                 .andExpect(MockMvcResultMatchers.model()
-                        .attribute("spittleList", hasItem(expectedSpittles.toArray()))
+                        .attribute("spittleList", hasItems(expectedSpittles.toArray()))
                 );
-    }
-
-    @Test
-    public void equalsTest() throws Exception {
-        Collection<Spittle> c = createSpittles(10);
-        Set<Spittle> spittleSet = new HashSet<>(c);
-        spittleSet.addAll(c);
-        LOGGER.info("SPITTLE SET {}", spittleSet);
-        Assert.assertEquals(10, spittleSet.size());
     }
 
     private List<Spittle> createSpittles(int count) {
