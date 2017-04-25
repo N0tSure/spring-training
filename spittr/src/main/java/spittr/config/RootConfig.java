@@ -26,10 +26,16 @@ public class RootConfig {
 
     @Bean
     public SpittleRepository createStubSpittleRepository() {
+        final String[] spittleMsg = {
+                "Spittles go fourth!",
+                "Spittle spittle spittle",
+                "Here another spittle",
+                "Hello World! An Spittle!"
+        };
         return (max, count) -> {
             List<Spittle> result = new ArrayList<>();
             for (int i = 0; i < count; i++) {
-                result.add(new Spittle("Spittle #" + i, new Date()));
+                result.add(new Spittle(spittleMsg[i % spittleMsg.length], new Date()));
             }
 
             return result;
