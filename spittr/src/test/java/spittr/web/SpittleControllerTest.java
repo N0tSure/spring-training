@@ -74,6 +74,25 @@ public class SpittleControllerTest {
 
     }
 
+    @Test
+    public void testSpittle() throws Exception {
+        Spittle expectedSpittle = new Spittle("Hello", new Date());
+
+        SpittleRepository mockRepo = Mockito.mock(SpittleRepository.class);
+
+        Mockito.when(mockRepo.findOne(12345)).thenReturn(expectedSpittle);
+
+        SpittleController controller = new SpittleController(mockRepo);
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/spittles/12345"))
+                .andExpect(MockMvcResultMatchers.view().name("spittle"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("spittle"))
+                .andExpect(MockMvcResultMatchers.model().attribute("spittle", expectedSpittle));
+
+
+    }
+
     private List<Spittle> createSpittles(int count) {
         List<Spittle> result = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
