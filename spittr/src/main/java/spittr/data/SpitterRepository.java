@@ -1,6 +1,7 @@
 package spittr.data;
 
 import spittr.model.Spitter;
+import spittr.model.Spittle;
 
 /**
  * Created on 28.04.2017.
@@ -16,4 +17,10 @@ public interface SpitterRepository {
      */
     Spitter save(Spitter spitter);
 
+    /**
+     * Finds spitter by himself username
+     * @param username spitter's username
+     * @return founded spitter
+     */
+    Spitter findByUsername(String username);
 }

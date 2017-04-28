@@ -3,8 +3,11 @@ package spittr.data.stub;
 import org.springframework.stereotype.Component;
 import spittr.data.SpitterRepository;
 import spittr.model.Spitter;
+import spittr.model.Spittle;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -16,9 +19,11 @@ import java.util.Random;
 public class SpitterRepositoryStub implements SpitterRepository {
 
     private final Random random;
+    private final Map<String, Spitter> storage;
 
     public SpitterRepositoryStub() {
         this.random = new Random(42);
+        this.storage = new HashMap<>();
     }
 
     @Override
@@ -33,7 +38,12 @@ public class SpitterRepositoryStub implements SpitterRepository {
             throw new RuntimeException(exc);
         }
 
+        storage.put(spitter.getUsername(), spitter);
         return spitter;
     }
 
+    @Override
+    public Spitter findByUsername(String username) {
+        return storage.get(username);
+    }
 }
