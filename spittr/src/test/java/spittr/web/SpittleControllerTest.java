@@ -93,6 +93,21 @@ public class SpittleControllerTest {
 
     }
 
+    @Test
+    public void fakeRepositoryTest() throws Exception {
+        final String[] spittleMsg = {
+                "Spittles go fourth!",
+                "Spittle spittle spittle",
+                "Here another spittle",
+                "Hello World! An Spittle!"
+        };
+
+        for (int i = 0; i < 1000; i++) {
+            LOGGER.info("{}", spittleMsg[Math.abs(Math.round((float) Math.random() * 3))]);
+        }
+
+    }
+
     private List<Spittle> createSpittles(int count) {
         List<Spittle> result = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {

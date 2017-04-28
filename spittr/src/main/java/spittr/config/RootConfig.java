@@ -52,7 +52,7 @@ public class RootConfig {
             }
 
             private Spittle createSpittle(long id) {
-                int rnd = (int) Math.round(Math.random() * spittleMsg.length);
+                int rnd = Math.abs(Math.round((float) Math.random() * (spittleMsg.length - 1)));
                 double latitude = Math.random() * 90;
                 double longitude = Math.random() * 180;
 
@@ -62,7 +62,7 @@ public class RootConfig {
 
                     Field idField = Spittle.class.getDeclaredField("id");
                     idField.setAccessible(true);
-                    idField.setLong(spittle, id);
+                    idField.set(spittle, id);
                 } catch (NoSuchFieldException | IllegalAccessException exc) {
                    throw new RuntimeException(exc);
                 }
