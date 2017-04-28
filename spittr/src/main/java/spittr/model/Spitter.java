@@ -1,6 +1,7 @@
 package spittr.model;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 /**
  * Created on 28.04.2017.
@@ -14,6 +15,9 @@ public class Spitter {
     private String password;
     private String firstName;
     private String lastName;
+
+    public Spitter() {
+    }
 
     public Spitter(String username, String password, String firstName, String lastName) {
         this.username = username;
@@ -56,6 +60,25 @@ public class Spitter {
 
     public String getLastName() {
         return lastName;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, username, firstName, lastName);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that == null)
+            return false;
+        if (that instanceof Spitter) {
+           Spitter thatSpitter = (Spitter)  that;
+           return Objects.equal(this.id, thatSpitter.id) &&
+                   Objects.equal(this.username, thatSpitter.username) &&
+                   Objects.equal(this.firstName, thatSpitter.firstName) &&
+                   Objects.equal(this.lastName, thatSpitter.lastName);
+        }
+        return false;
     }
 
     @Override
