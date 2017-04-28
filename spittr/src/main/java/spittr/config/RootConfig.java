@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import spittr.data.SpittleRepository;
 import spittr.model.Spittle;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,13 +33,42 @@ public class RootConfig {
                 "Here another spittle",
                 "Hello World! An Spittle!"
         };
-        return (max, count) -> {
-            List<Spittle> result = new ArrayList<>();
-            for (int i = 0; i < count; i++) {
-                result.add(new Spittle(spittleMsg[i % spittleMsg.length], new Date()));
+
+        return new SpittleRepository() {
+
+            @Override
+            public Spittle findOne(long id) {
+                return createSpittle(id);
             }
 
-            return result;
+            @Override
+            public List<Spittle> findSpittles(long max, int count) {
+                List<Spittle> result = new ArrayList<>(count);
+                long ids = max + 1;
+                for (int i = 0; i < count; i++, ids++) {
+                    result.add(createSpittle(ids));
+                }
+                return result;
+            }
+
+            private Spittle createSpittle(long id) {
+                int rnd = (int) Math.round(Math.random() * spittleMsg.length);
+                double latitude = Math.random() * 90;
+                double longitude = Math.random() * 180;
+
+                Spittle spittle = new Spittle(spittleMsg[rnd], new Date(), latitude, longitude);
+
+                try {
+
+                    Field idField = Spittle.class.getDeclaredField("id");
+                    idField.setAccessible(true);
+                    idField.setLong(spittle, id);
+                } catch (NoSuchFieldException | IllegalAccessException exc) {
+                   throw new RuntimeException(exc);
+                }
+
+                return spittle;
+            }
         };
     }
 }
