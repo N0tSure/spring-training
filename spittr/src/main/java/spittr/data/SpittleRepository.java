@@ -12,6 +12,13 @@ import java.util.List;
 public interface SpittleRepository {
 
     /**
+     * Find one spittle
+     * @param id identifier of spittle
+     * @return founded spittle
+     */
+    Spittle findOne(long id);
+
+    /**
      * Find some most recent spittles
      * @param max Spittle
      *            ID that represents the maximum ID of any Spittle

@@ -4,13 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import spittr.data.SpittleRepository;
-import spittr.model.Spittle;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created on 22 Apr, 2017.
@@ -25,14 +20,7 @@ import java.util.List;
 public class RootConfig {
 
     @Bean
-    public SpittleRepository createStubSpittleRepository() {
-        return (max, count) -> {
-            List<Spittle> result = new ArrayList<>();
-            for (int i = 0; i < count; i++) {
-                result.add(new Spittle("Spittle #" + i, new Date()));
-            }
-
-            return result;
-        };
+    public LocalValidatorFactoryBean localValidatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
     }
 }

@@ -20,11 +20,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan(basePackages = "spittr.web")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+    // TODO: 24.04.2017 Answer http://stackoverflow.com/questions/40022839/unable-to-resolve-mvc-view-when-using-spring-and-intellj
     @Bean
     public ViewResolver viewResolver() {
-        InternalResourceViewResolver resolver =
-                new InternalResourceViewResolver("/WEB-INF/views/", ".jsp");
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".jsp");
         resolver.setExposeContextBeansAsAttributes(true);
         return resolver;
     }
