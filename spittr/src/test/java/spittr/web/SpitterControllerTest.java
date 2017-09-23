@@ -1,5 +1,6 @@
 package spittr.web;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -39,7 +40,10 @@ public class SpitterControllerTest {
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         mockMvc.perform(MockMvcRequestBuilders.get("/spitter/register"))
-                .andExpect(MockMvcResultMatchers.view().name("registerForm"));
+                .andExpect(MockMvcResultMatchers.view().name("registerForm"))
+                .andExpect(
+                        MockMvcResultMatchers.model().attribute("spitter", CoreMatchers.any(Spitter.class))
+                );
 
     }
 
@@ -48,10 +52,21 @@ public class SpitterControllerTest {
 
         SpitterRepository mockRepository = Mockito.mock(SpitterRepository.class);
 
-        Spitter unsaved =
-                new Spitter("sirosh", "asirosh", "Artemis", "Sirosh");
+        Spitter unsaved = new Spitter(
+                        "sirosh@iac.spb.ru",
+                        "sirosh",
+                        "asirosh",
+                        "Artemis",
+                        "Sirosh"
+                );
 
-        Spitter saved = new Spitter("sirosh", "asirosh", "Artemis", "Sirosh");
+        Spitter saved = new Spitter(
+                "sirosh@iac.spb.ru",
+                "sirosh",
+                "asirosh",
+                "Artemis",
+                "Sirosh"
+        );
         Field idField = Spitter.class.getDeclaredField("id");
         idField.setAccessible(true);
         idField.set(saved, 42L);
@@ -70,6 +85,7 @@ public class SpitterControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/spitter/register")
                 .param("firstName", "Artemis")
                 .param("lastName", "Sirosh")
+                .param("email", "sirosh@iac.spb.ru")
                 .param("username", "sirosh")
                 .param("password", "asirosh")
         ).andExpect(MockMvcResultMatchers.redirectedUrl("/spitter/sirosh"));

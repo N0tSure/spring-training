@@ -1,0 +1,7 @@
+<!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD
+GlassFish Application Server 3.1 Servlet 3.0//EN"
+        "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
+<!-- https://docs.oracle.com/cd/E26576_01/doc.312/e24929/dd-files.htm#GSDPG00078 -->
+<glassfish-web-app>
+    <context-root>/</context-root>
+</glassfish-web-app>
