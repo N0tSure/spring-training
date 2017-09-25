@@ -14,6 +14,8 @@
   </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring.version>4.3.2.RELEASE</spring.version>
         <jdk.version>1.8</jdk.version>
     </properties>
@@ -117,6 +119,26 @@
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <name>build.time</name>
+                            <pattern>dd-MM-yyyy HH:mm</pattern>
+                            <timeZone>Europe/Moscow</timeZone>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
