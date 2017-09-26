@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.web.servlet.LocaleResolver;
@@ -15,10 +14,10 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -42,7 +41,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     TilesConfigurer tilesConfigurer() {
         TilesConfigurer configurer = new TilesConfigurer();
-        configurer.setDefinitions("/WEB-INF/layout/tiles.xml");
+        configurer.setDefinitions("/WEB-INF/layout/tiles.xml", "/WEB-INF/views/**/tiles.xml");
         configurer.setCheckRefresh(true);
         return configurer;
     }
@@ -86,10 +85,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         DateFormatter formatter = new DateFormatter("dd-MM-yyyy HH:mm");
+        registry.addFormatterForFieldType(Date.class, formatter);
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
     }
 }
