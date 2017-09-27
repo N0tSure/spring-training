@@ -11,7 +11,7 @@
     <title>Spittr</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<s:url value="css/bootstrap.min.css" />">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="<s:url value="js/bootstrap.min.js" />"></script>
     <script src="<s:url value="js/jquery.min.js" />"></script>
     <style>
@@ -35,7 +35,7 @@
     <div id="content">
         <t:insertAttribute name="body" />
     </div>
-    <div id="footer">
+    <div id="footer" class="row">
         <t:insertAttribute name="footer" />
     </div>
 </body>

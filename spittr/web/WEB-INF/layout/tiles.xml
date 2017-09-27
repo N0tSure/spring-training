@@ -12,4 +12,9 @@
     <definition name="home" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
     </definition>
+
+    <definition name="registerForm" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/registerForm.jsp" />
+    </definition>
+
 </tiles-definitions>
