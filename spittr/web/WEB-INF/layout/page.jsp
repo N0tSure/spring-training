@@ -35,6 +35,7 @@
     <div id="content">
         <t:insertAttribute name="body" />
     </div>
+    <%-- TODO fix horisontal layout --%>
     <div id="footer" class="row">
         <t:insertAttribute name="footer" />
     </div>
