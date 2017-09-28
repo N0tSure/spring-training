@@ -131,9 +131,10 @@
                         <goals>
                             <goal>timestamp-property</goal>
                         </goals>
-                        <phase>compile</phase>
+                        <phase>validate</phase>
                         <configuration>
                             <name>build.time</name>
+                            <locale>ru_RU</locale>
                             <pattern>dd-MM-yyyy HH:mm</pattern>
                             <timeZone>Europe/Moscow</timeZone>
                         </configuration>
