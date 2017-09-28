@@ -11,15 +11,18 @@
     <title>Spittr</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<c:url context="/" value="/css/bootstrap.min.css" />"/>
-    <script src="<s:url value="js/bootstrap.min.js" />"></script>
-    <script src="<s:url value="js/jquery.min.js" />"></script>
+    <link rel="stylesheet" href="<s:url context="/" value="/css/bootstrap.min.css" />"/>
+    <script src="<s:url context="/" value="/js/bootstrap.min.js" />"></script>
+    <script src="<s:url context="/" value="/js/jquery.min.js" />"></script>
     <style>
         body {
             background-color: #f0f0f0;
         }
         #content {
             padding: 10px;
+        }
+        .spittles {
+            font-size: 16px;
         }
         footer {
             background-color: #555555;
