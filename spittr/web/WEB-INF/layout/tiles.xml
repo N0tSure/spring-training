@@ -25,4 +25,8 @@
         <put-attribute name="body" value="/WEB-INF/views/spittles.jsp" />
     </definition>
 
+    <definition name="spittle" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/spittle.jsp" />
+    </definition>
+
 </tiles-definitions>
