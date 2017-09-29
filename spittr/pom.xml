@@ -15,6 +15,10 @@
         <version>1.0</version>
     </parent>
 
+    <properties>
+        <project.thymeleaf.version>3.0.7.RELEASE</project.thymeleaf.version>
+    </properties>
+
     <dependencies>
         <!--JSP -->
         <dependency>
@@ -35,6 +39,19 @@
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-extras</artifactId>
             <version>3.0.7</version>
+        </dependency>
+
+        <!--  Thymeleaf  -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${project.thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>${project.thymeleaf.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
