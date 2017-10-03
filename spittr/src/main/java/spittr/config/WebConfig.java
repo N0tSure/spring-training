@@ -48,10 +48,10 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
     // TODO: 24.04.2017 Answer http://stackoverflow.com/questions/40022839/unable-to-resolve-mvc-view-when-using-spring-and-intellj
     @Bean
-    ViewResolver htmlViewResolver() {
+    ViewResolver htmlViewResolver(MessageSource messageSource) {
 
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
-        resolver.setTemplateEngine(templateEngine(htmlTemplateResolver()));
+        resolver.setTemplateEngine(templateEngine(htmlTemplateResolver(), messageSource));
         resolver.setContentType(MediaType.TEXT_HTML_VALUE);
         resolver.setCharacterEncoding(VIEW_ENCODING);
         return resolver;
@@ -74,7 +74,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Bean
     MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
+        messageSource.setBasenames("messages", "application");
         return messageSource;
     }
 
@@ -110,10 +110,11 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
     }
 
-    private TemplateEngine templateEngine(ITemplateResolver resolver) {
+    private TemplateEngine templateEngine(ITemplateResolver resolver, MessageSource messageSource) {
 
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setTemplateResolver(resolver);
+        engine.setMessageSource(messageSource);
         return engine;
     }
 
