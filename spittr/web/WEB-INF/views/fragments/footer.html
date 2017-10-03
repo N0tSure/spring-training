@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<footer th:fragment="footer" class="container-fluid text-center">
+    <span th:text="#{application.name}"></span>
+    <span th:text="#{build.version}"></span>
+    <span th:text="#{build.timestamp}"></span>
+    <div th:with="currentURL=(${#httpServletRequest.requestURI})">
+        <a th:href="@{${currentURL}(lang=en)}">English</a>
+        <span> | </span>
+        <a th:href="@{${currentURL}(lang=ru)}" th:text="#{spittr.footer.languageLink}"></a>
+    </div>
+</footer>
+</body>
+</html>
