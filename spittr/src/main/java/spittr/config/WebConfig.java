@@ -7,8 +7,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
@@ -37,14 +35,12 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "spittr.web")
-@PropertySource(value = "classpath:application.properties")
 public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private final static String VIEW_ENCODING = "UTF-8";
 
     private ApplicationContext applicationContext;
 
-    // TODO: 24.04.2017 Answer http://stackoverflow.com/questions/40022839/unable-to-resolve-mvc-view-when-using-spring-and-intellj
     @Bean
     ViewResolver htmlViewResolver(MessageSource messageSource) {
 
@@ -74,11 +70,6 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("messages", "application");
         return messageSource;
-    }
-
-    @Bean
-    PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
     }
 
     @Override
