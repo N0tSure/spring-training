@@ -1,0 +1,84 @@
+<!DOCTYPE html >
+<html th:lang="${#locale.language}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spittr</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/spittr.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/popper.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<!--  Navigation bar here  -->
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h1 th:text="#{spittr.registerForm.headler}"></h1>
+    <form method="POST" th:object="${spitter}">
+        <div class="form-group">
+            <div class="row" th:classappend="${#fields.hasErrors('firstName')}? 'alert alert-danger'">
+                <div class="col-md-4">
+                    <label for="firstName" th:text="#{spittr.registerForm.firstName}"></label>
+                    <input type="text" th:field="*{firstName}" id="firstName" class="form-control" />
+                </div>
+                <div class="col-md-8" th:if="${#fields.hasErrors('firstName')}">
+                    <div th:each="error : ${#fields.errors('firstName')}" th:text="${error}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row" th:classappend="${#fields.hasErrors('lastName')}? 'alert alert-danger'">
+                <div class="col-md-4">
+                    <label for="lastName" th:text="#{spittr.registerForm.lastName}"></label>
+                    <input type="text" th:field="*{lastName}" id="lastName" class="form-control" />
+                </div>
+                <div class="col-md-8" th:if="${#fields.hasErrors('lastName')}">
+                    <div th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row" th:classappend="${#fields.hasErrors('email')}? 'alert alert-danger'">
+                <div class="col-md-4">
+                    <label for="email" th:text="#{spittr.registerForm.email}"></label>
+                    <input type="text" th:field="*{email}" class="form-control" id="email" />
+                </div>
+                <div class="col-md-8" th:if="${#fields.hasErrors('email')}">
+                    <div th:each="error : ${#fields.errors('email')}" th:text="${error}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row" th:classappend="${#fields.hasErrors('username')}? 'alert alert-danger'">
+                <div class="col-md-4">
+                    <label for="username" th:text="#{spittr.registerForm.username}"></label>
+                    <input type="text" th:field="*{username}" class="form-control" id="username" />
+                </div>
+                <div class="col-md-8" th:if="${#fields.hasErrors('username')}">
+                    <div th:each="error : ${#fields.errors('username')}" th:text="${error}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row" th:classappend="${#fields.hasErrors('password')}? 'alert alert-danger'">
+                <div class="col-md-4">
+                    <label for="password" th:text="#{spittr.registerForm.password}"></label>
+                    <input type="password" th:field="*{password}" class="form-control" id="password" />
+                </div>
+                <div class="col-md-8" th:if="${#fields.hasErrors('password')}">
+                    <div th:each="error : ${#fields.errors('password')}" th:text="${error}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-primary" th:value="#{spittr.registerForm.submitButton}">
+            </div>
+        </div>
+    </form>
+</div>
+<!--  Footer here  -->
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

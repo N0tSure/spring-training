@@ -4,4 +4,7 @@ GlassFish Application Server 3.1 Servlet 3.0//EN"
 <!-- https://docs.oracle.com/cd/E26576_01/doc.312/e24929/dd-files.htm#GSDPG00078 -->
 <glassfish-web-app>
     <context-root>/</context-root>
+    <jsp-config>
+        <property name="trimSpaces" value="true" />
+    </jsp-config>
 </glassfish-web-app>

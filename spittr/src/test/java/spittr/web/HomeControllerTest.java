@@ -22,7 +22,7 @@ public class HomeControllerTest {
     @Test
     public void failIf_returning_name_not_satisfy_view_name() throws Exception {
         HomeController controller = new HomeController();
-        assertEquals("View name must satisfy home.jsp", "home", controller.home());
+        assertEquals("View name must satisfy home view", "home", controller.home());
         LOGGER.info("HomeController returns '{}' view name", controller.home());
     }
 
@@ -31,8 +31,8 @@ public class HomeControllerTest {
         HomeController controller = new HomeController();
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(MockMvcResultMatchers
-                        .view()
-                        .name("home"));
+                .andExpect(MockMvcResultMatchers.view().name("home"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+        ;
     }
 }

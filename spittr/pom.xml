@@ -15,6 +15,10 @@
         <version>1.0</version>
     </parent>
 
+    <properties>
+        <project.thymeleaf.version>3.0.7.RELEASE</project.thymeleaf.version>
+    </properties>
+
     <dependencies>
         <!--JSP -->
         <dependency>
@@ -28,6 +32,26 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--  Apache Tiles Tag Library  -->
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-extras</artifactId>
+            <version>3.0.7</version>
+        </dependency>
+
+        <!--  Thymeleaf  -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${project.thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>${project.thymeleaf.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
@@ -61,6 +85,7 @@
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
         <plugins>
+
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
@@ -69,6 +94,64 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.3.0</version>
+                <executions>
+
+                    <execution>
+                        <id>download-bootstrap-css</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css</url>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/css</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>download-bootstrap-js</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js</url>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/js</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>download-jquery-js</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js</url>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/js</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>download-popper-js</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://unpkg.com/popper.js@1.12.5/dist/umd/popper.js</url>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/js</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
         </plugins>
         <resources>
             <resource>

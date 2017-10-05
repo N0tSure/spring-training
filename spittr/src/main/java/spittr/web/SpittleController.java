@@ -30,11 +30,13 @@ public class SpittleController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Spittle> pagedSpittles(
+    public String  pagedSpittles(
             @RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
-            @RequestParam(value = "count", defaultValue = "20") int count
+            @RequestParam(value = "count", defaultValue = "20") int count,
+            Model model
     ) {
-        return spittleRepository.findSpittles(max, count);
+        model.addAttribute("spittleList", spittleRepository.findSpittles(max, count));
+        return "spittles";
     }
 
     @RequestMapping(value = "/{spittleId}", method = RequestMethod.GET)

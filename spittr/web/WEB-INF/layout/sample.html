@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sample page</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        footer {
+            background-color: #555555;
+            color: white;
+            padding: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Spittr</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">Spittles</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-user"> Register</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <div class="h1">Spittr</div>
+            <p>Welcome to Spittr!</p>
+        </div>
+    </div>
+    <footer class="container-fluid text-center">
+        <span>spittr 1.0-SNAPSHOT 12:43 12-01-2017</span>
+        <div>
+            <label for="lang_selector">Language: </label>
+            <select style="color: black" id="lang_selector">
+                <option href="?lang=en">English</option>
+                <option href="?lang=ru">Русский</option>
+            </select>
+        </div>
+    </footer>
+</body>
+</html>

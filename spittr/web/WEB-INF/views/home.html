@@ -1,0 +1,30 @@
+<!DOCTYPE html >
+<html th:lang="${#locale.language}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spittr</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/spittr.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/popper.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <h1 th:text="#{spittr.home.welcome}"></h1>
+            <p>
+                <span>
+                    <a class="btn btn-default btn-lg" th:href="@{/spittles}" th:text="#{spittr.home.spittles}"></a>
+                </span>
+                <span>
+                    <a class="btn btn-default btn-lg" th:href="@{/spitter/register}" th:text="#{spittr.home.register}"></a>
+                </span>
+            </p>
+        </div>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
