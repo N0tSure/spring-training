@@ -1,6 +1,5 @@
 package spittr.web;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
@@ -13,9 +12,11 @@ import org.springframework.web.servlet.view.InternalResourceView;
 import spittr.data.SpittleRepository;
 import spittr.model.Spittle;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.hasItems;
 
 /**
  * Created on 23 Apr, 2017.

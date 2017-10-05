@@ -2,7 +2,6 @@ package spittr.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

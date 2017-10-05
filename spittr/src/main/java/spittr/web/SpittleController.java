@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import spittr.data.SpittleRepository;
-import spittr.model.Spittle;
-
-import java.util.List;
 
 /**
  * Created on 23 Apr, 2017.

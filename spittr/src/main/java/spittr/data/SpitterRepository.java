@@ -1,7 +1,6 @@
 package spittr.data;
 
 import spittr.model.Spitter;
-import spittr.model.Spittle;
 
 /**
  * Created on 28.04.2017.

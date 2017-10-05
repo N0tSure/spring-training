@@ -1,9 +1,9 @@
 package spittr.model;
 
-import java.util.Date;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+
+import java.util.Date;
 
 /**
  * Created on 23 Apr, 2017.

@@ -3,7 +3,6 @@ package spittr.data.stub;
 import org.springframework.stereotype.Component;
 import spittr.data.SpitterRepository;
 import spittr.model.Spitter;
-import spittr.model.Spittle;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
