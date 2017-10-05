@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spittr</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/spittr.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/popper.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<!--  Navigation bar here  -->
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="#{spittr.spittle.headler}"></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h4 th:text="#{spittr.spittle.messageSpan}"></h4>
+        </div>
+        <div class="col-md-4" th:text="${spittle.getMessage()}"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h4 th:text="#{spittr.spittle.dateSpan}"></h4>
+        </div>
+        <div class="col-md-4" th:text="${{spittle.timestamp}}"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h4 th:text="#{spittr.spittle.latitudeSpan}"></h4>
+        </div>
+        <div class="col-md-4" th:text="${{T(String).format('%10.6f', spittle.latitude)}}"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h4 th:text="#{spittr.spittle.longitudeSpan}"></h4>
+        </div>
+        <div class="col-md-4" th:text="${{T(String).format('%10.6f', spittle.longitude)}}"></div>
+    </div>
+</div>
+<!--  Footer here  -->
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
