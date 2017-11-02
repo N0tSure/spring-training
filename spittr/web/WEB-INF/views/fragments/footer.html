@@ -8,10 +8,13 @@
     <span th:text="#{application.name}"></span>
     <span th:text="#{build.version}"></span>
     <span th:text="#{build.timestamp}"></span>
-    <div th:with="currentURL=(${#httpServletRequest.requestURI})">
-        <a th:href="@{${currentURL}(lang=en)}">English</a>
+    <div>
+        <a th:href="${#httpServletRequest.getRequestURI().concat('?lang=en')}">English</a>
         <span> | </span>
-        <a th:href="@{${currentURL}(lang=ru)}" th:text="#{spittr.footer.languageLink}"></a>
+        <a
+                th:href="${#httpServletRequest.getRequestURI().concat('?lang=ru')}"
+                th:text="#{spittr.footer.languageLink}">
+        </a>
     </div>
 </footer>
 </body>
