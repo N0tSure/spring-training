@@ -104,6 +104,8 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
+        registry.addResourceHandler("/images/profile/**")
+                .addResourceLocations(System.getenv("spittr.resources.pictures.profile"));
     }
 
     private TemplateEngine templateEngine(ITemplateResolver resolver, MessageSource messageSource) {

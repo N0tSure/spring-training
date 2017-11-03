@@ -31,7 +31,7 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         registration.setMultipartConfig(
-                new MultipartConfigElement("C:\\Users\\sirosh\\AppData\\Local\\Temp\\spittr")
+                new MultipartConfigElement(System.getenv("spittr.tmp.resources.pictures.profile"))
         );
     }
 
