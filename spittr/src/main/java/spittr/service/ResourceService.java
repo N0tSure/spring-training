@@ -20,6 +20,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * <p>
+ *     Field profilePictureDirectory must point on local filesystem directory, there
+ *     will saved profile pictures files, and after found. Names of loaded file estimated as
+ *     <strong>MD5 checksum</strong> from string, which created from {@link Spitter}'s id.
+ *
+ *     Field defaultPictureFileName provides name of profile's default picture
+ *
  * Created on 08.11.2017.
  * </p>
  *
@@ -31,6 +37,15 @@ public class ResourceService {
     private File profilePictureDirectory;
     private String defaultPictureFileName;
 
+    /**
+     * Creates instance of {@link ResourceService}
+     *
+     * @param profilePictureDirectoryURL local filesystem directory
+     * @param defaultPictureFileName name of default picture
+     * @return ResourceService instance
+     * @throws NullPointerException if profilePictureDirectoryURL or defaultPictureFileName is null
+     * @throws IllegalStateException if profile picture directory or default picture not exists
+     */
     public static ResourceService createInstance(
             final URL profilePictureDirectoryURL, final String defaultPictureFileName) {
         File profilePictureDirectory = new File(profilePictureDirectoryURL.getFile());
@@ -59,6 +74,12 @@ public class ResourceService {
 
     }
 
+    /**
+     * Find name of profile picture, from {@link Spitter}
+     * @param spitter is profile, which picture will search
+     * @return profile picture file name
+     * @throws NullPointerException if spitter is null or spitter's id is null
+     */
     public String findSpitterProfilePicture(final Spitter spitter) {
 
         final String expectedFileName =
@@ -78,6 +99,13 @@ public class ResourceService {
         }
     }
 
+    /**
+     * Saves picture from {@link MultipartFile} to file
+     * @param spitter which profile picture will saved
+     * @param profilePictureMultipartFile received file
+     * @throws IOException if I/O errors occurs due saving
+     * @throws NullPointerException if spitter is null or spitter's id is null
+     */
     public void saveSpitterProfilePicture(
             final Spitter spitter, final MultipartFile profilePictureMultipartFile) throws IOException {
 
