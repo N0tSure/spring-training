@@ -114,6 +114,7 @@ public class Spitter {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("id", id)
                 .add("Username", username)
                 .add("Email", email)
                 .add("First name", firstName)
