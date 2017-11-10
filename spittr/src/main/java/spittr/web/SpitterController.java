@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import spittr.data.SpitterRepository;
 import spittr.model.Spitter;
+import spittr.service.ResourceService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 /**
  * Created on 28.04.2017.
@@ -24,10 +26,12 @@ import javax.validation.Valid;
 public class SpitterController {
 
     private final SpitterRepository repository;
+    private final ResourceService resourceService;
 
     @Autowired
-    public SpitterController(SpitterRepository spitterRepository) {
+    public SpitterController(SpitterRepository spitterRepository, ResourceService resourceService) {
         this.repository = spitterRepository;
+        this.resourceService = resourceService;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -40,12 +44,14 @@ public class SpitterController {
     public String processingRegistration(
             @RequestPart(name = "profilePicture", required = false) MultipartFile profilePicture,
             @Valid Spitter spitter,
-            Errors errors) {
+            Errors errors
+    ) throws IOException {
         if (errors.hasErrors()) {
             return "registerForm";
         }
 
-        repository.save(spitter);
+        Spitter savedSpitter = repository.save(spitter);
+        resourceService.saveSpitterProfilePicture(savedSpitter, profilePicture);
 
         return "redirect:/spitter/" + spitter.getUsername();
     }

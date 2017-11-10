@@ -1,11 +1,7 @@
 package spittr.web;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.EnvironmentVariables;
-import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +19,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import spittr.config.RootConfig;
 import spittr.config.WebConfig;
+import spittr.data.SpitterRepository;
+import spittr.model.Spitter;
+import spittr.service.ResourceService;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p>
@@ -75,5 +81,23 @@ public class FilesUploadingTest extends AbstractSpittrIntegrationTest {
         )
                 .andDo(MockMvcResultHandlers.log());
 
+        SpitterRepository repository = webApplicationContext.getBean(SpitterRepository.class);
+        ResourceService resourceService = webApplicationContext.getBean(ResourceService.class);
+
+        Spitter savedSpitter = repository.findByUsername("sirosh");
+        LOGGER.info("Saved spitter: {}", savedSpitter);
+
+        String spitterProfilePicture = resourceService.findSpitterProfilePicture(savedSpitter);
+        File profilePicture = new File(this.getProfilePicturesDirectory(), spitterProfilePicture);
+        assertTrue("Profile picture file not exists", profilePicture.exists());
+        assertNotEquals("Profile picture not found", this.getDefaultPictureFile(), profilePicture);
+
+        LOGGER.info("Profile picture founded: {}", spitterProfilePicture);
+
+        byte[] savedProfilePictureBytes = Files.readAllBytes(Paths.get(profilePicture.toURI()));
+        assertTrue(
+                "Loaded file's content not matching expectations",
+                Arrays.equals(savedProfilePictureBytes, profilePictureFile.getBytes())
+        );
     }
 }

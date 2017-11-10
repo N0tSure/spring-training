@@ -16,9 +16,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import spittr.config.RootConfig;
 import spittr.data.SpitterRepository;
 import spittr.model.Spitter;
+import spittr.service.ResourceService;
 
 import javax.validation.Validator;
 import java.lang.reflect.Field;
+
+import static org.mockito.Matchers.any;
 
 
 /**
@@ -31,7 +34,7 @@ public class SpitterControllerTest {
 
     @Test
     public void fail_if_not_show_registration_form() throws Exception {
-        SpitterController controller = new SpitterController(null);
+        SpitterController controller = new SpitterController(null, null);
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         mockMvc.perform(MockMvcRequestBuilders.get("/spitter/register"))
@@ -46,6 +49,7 @@ public class SpitterControllerTest {
     public void shouldProcessRegistration() throws Exception {
 
         SpitterRepository mockRepository = Mockito.mock(SpitterRepository.class);
+        ResourceService mockResourceService = Mockito.mock(ResourceService.class);
 
         Spitter unsaved = new Spitter(
                         "sirosh@iac.spb.ru",
@@ -71,7 +75,7 @@ public class SpitterControllerTest {
 
         Mockito.when(mockRepository.save(unsaved)).thenReturn(saved);
 
-        SpitterController controller = new SpitterController(mockRepository);
+        SpitterController controller = new SpitterController(mockRepository, mockResourceService);
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         mockMvc.perform(MockMvcRequestBuilders.post("/spitter/register")
