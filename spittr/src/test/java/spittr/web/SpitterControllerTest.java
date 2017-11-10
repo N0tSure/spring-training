@@ -26,13 +26,8 @@ import java.lang.reflect.Field;
  *
  * @author Artemis A. Sirosh
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = RootConfig.class)
 public class SpitterControllerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpitterControllerTest.class);
-
-    @Autowired
-    private Validator validator;
 
     @Test
     public void fail_if_not_show_registration_form() throws Exception {
@@ -70,9 +65,6 @@ public class SpitterControllerTest {
         Field idField = Spitter.class.getDeclaredField("id");
         idField.setAccessible(true);
         idField.set(saved, 42L);
-
-        LOGGER.info("Violated: {}", validator.validate(unsaved));
-        LOGGER.info("Violated: {}", validator.validate(saved));
 
         LOGGER.info("Unsaved: id = {}, spitter = {}", unsaved.getId(), unsaved);
         LOGGER.info("Saved: id = {}, spitter = {}", saved.getId(), saved);

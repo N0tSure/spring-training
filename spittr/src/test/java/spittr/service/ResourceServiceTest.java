@@ -9,22 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import spittr.data.SpitterRepository;
-import spittr.data.SpittleRepository;
 import spittr.data.stub.SpitterRepositoryStub;
 import spittr.model.Spitter;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.MessageDigest;
 import java.util.Arrays;
 
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 /**

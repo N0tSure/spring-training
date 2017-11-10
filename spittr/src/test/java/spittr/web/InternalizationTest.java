@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 import spittr.config.RootConfig;
 import spittr.config.WebConfig;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import static org.hamcrest.Matchers.containsString;
@@ -31,12 +32,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("file:web")
 @ContextConfiguration(classes = {RootConfig.class, WebConfig.class}, loader = AnnotationConfigWebContextLoader.class)
-public class InternalizationTest {
+public class InternalizationTest extends AbstractSpittrIntegrationTest {
 
     private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    public InternalizationTest() throws IOException {
+        super("no_photo.png");
+    }
 
     @Before
     public void setUp() throws Exception {

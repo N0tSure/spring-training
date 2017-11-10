@@ -25,6 +25,7 @@ import spittr.config.RootConfig;
 import spittr.config.WebConfig;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * <p>
@@ -36,41 +37,16 @@ import java.io.File;
 @RunWith(SpringRunner.class)
 @WebAppConfiguration("file:web")
 @ContextConfiguration(classes = {RootConfig.class, WebConfig.class}, loader = AnnotationConfigWebContextLoader.class)
-public class FilesUploadingTest {
+public class FilesUploadingTest extends AbstractSpittrIntegrationTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(FilesUploadingTest.class);
-
-    @ClassRule
-    public static EnvironmentVariables environmentVariables = new EnvironmentVariables();
-
-    @ClassRule
-    public static TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-    private static File profilePictureLocation;
-
-    private static File temporalProfilePictureLocation;
 
     private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @BeforeClass
-    public static void environmentSetUp() throws Exception {
-        profilePictureLocation = temporaryFolder.newFolder();
-        temporalProfilePictureLocation = temporaryFolder.newFolder();
-
-        LOGGER.info("Picture location: {}", profilePictureLocation.getAbsolutePath());
-        LOGGER.info("Picture temporal location: {}", temporalProfilePictureLocation.getAbsolutePath());
-
-        environmentVariables.set(
-                "spittr.resources.pictures.profile",
-                profilePictureLocation.getAbsolutePath()
-        );
-
-        environmentVariables.set(
-                "spittr.tmp.resources.pictures.profile",
-                temporalProfilePictureLocation.getAbsolutePath()
-        );
+    public FilesUploadingTest() throws IOException {
+        super("no_photo.png");
     }
 
     @Before
