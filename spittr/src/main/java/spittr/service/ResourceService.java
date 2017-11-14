@@ -67,6 +67,7 @@ public class ResourceService {
                 profilePictureDirectory
         );
 
+        // TODO: 14.11.2017 Throw specific exception in this case
         checkArgument(
                 new File(profilePictureDirectory, defaultPictureFileName).exists(),
                 "Default profile picture: [%s] not found",
@@ -127,6 +128,7 @@ public class ResourceService {
                     profilePictureMultipartFile.getBytes().length
             );
 
+            // TODO: 14.11.2017 Check content type
             String fileName = estimateFileName(spitter);
             String fileExtension = profilePictureMultipartFile.getContentType().split("/")[1];
 

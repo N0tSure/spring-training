@@ -60,6 +60,7 @@ public class SpitterController {
     public String showSpitterProfile(@PathVariable String username, Model model) {
         Spitter spitter = repository.findByUsername(username);
         model.addAttribute(spitter);
+        model.addAttribute("fileNamingService", resourceService);
         return "profile";
     }
 
