@@ -7,10 +7,16 @@ import spittr.model.Spitter;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
+import java.nio.channels.ByteChannel;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -32,6 +38,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Artemis A. Sirosh
  */
 public class ResourceService {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ResourceService.class);
 
     private File profilePictureDirectory;
@@ -48,10 +55,11 @@ public class ResourceService {
      */
     public static ResourceService createInstance(
             final URL profilePictureDirectoryURL, final String defaultPictureFileName) {
-        File profilePictureDirectory = new File(profilePictureDirectoryURL.getFile());
 
         checkNotNull(profilePictureDirectoryURL, "Profile directory URL is null");
         checkNotNull(defaultPictureFileName, "Default picture name is null");
+
+        File profilePictureDirectory = new File(profilePictureDirectoryURL.getFile());
 
         checkArgument(
                 profilePictureDirectory.exists(),
@@ -88,7 +96,7 @@ public class ResourceService {
         LOGGER.debug("Looking up for: {} in {}", expectedFileName, profilePictureDirectory);
 
         String[] fileNames =
-                profilePictureDirectory.list((dir, name) -> name.equals(expectedFileName));
+                profilePictureDirectory.list((dir, name) -> name.startsWith(expectedFileName));
 
         LOGGER.debug("Found: {}", Arrays.toString(fileNames));
 
@@ -109,10 +117,23 @@ public class ResourceService {
     public void saveSpitterProfilePicture(
             final Spitter spitter, final MultipartFile profilePictureMultipartFile) throws IOException {
 
+        checkNotNull(spitter, "Spitter is null");
+
         if (profilePictureMultipartFile != null && !profilePictureMultipartFile.isEmpty()) {
-            final String fileName = estimateFileName(checkNotNull(spitter, "Spitter is null"));
-            File profilePictureFile = new File(this.profilePictureDirectory, fileName);
-            profilePictureMultipartFile.transferTo(profilePictureFile);
+
+            LOGGER.debug(
+                    "Uploaded image name: {}, size: {}",
+                    profilePictureMultipartFile.getOriginalFilename(),
+                    profilePictureMultipartFile.getBytes().length
+            );
+
+            String fileName = estimateFileName(spitter);
+            String fileExtension = profilePictureMultipartFile.getContentType().split("/")[1];
+
+            File profilePictureFile =
+                    new File(this.profilePictureDirectory, String.format("%s.%s", fileName, fileExtension));
+
+            transferTo(profilePictureFile.toURI(), profilePictureMultipartFile.getBytes());
         }
 
     }
@@ -131,5 +152,9 @@ public class ResourceService {
             throw new RuntimeException(exc);
         }
 
+    }
+
+    private void transferTo(URI destination, byte[] source) throws IOException {
+        Files.write(Paths.get(destination), source);
     }
 }

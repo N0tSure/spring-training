@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import spittr.data.SpitterRepository;
@@ -79,14 +80,18 @@ public class ResourceServiceTest {
     @Test
     public void shouldSaveAndFindProfilePicture() throws Exception {
         final Spitter spitter = repository.save(new Spitter());
-        MultipartFile profilePictureMultipartFile =
-                new MockMultipartFile("profilePicture", "foobar".getBytes());
+        MultipartFile profilePictureMultipartFile = new MockMultipartFile(
+                "profilePicture",
+                "foo.jpeg",
+                MediaType.IMAGE_JPEG_VALUE,
+                "foo".getBytes()
+        );
 
         resourceService.saveSpitterProfilePicture(spitter, profilePictureMultipartFile);
         LOGGER.info("Saved picture file for profile: {}", spitter);
 
         File profilePictureFile =
-                new File(this.profilePicturesDirectory, resourceService.estimateFileName(spitter));
+                new File(this.profilePicturesDirectory, resourceService.estimateFileName(spitter) + ".jpeg");
 
         assertTrue("Picture file for profile not found", profilePictureFile.exists());
         LOGGER.info("Profile picture file founded: {}", profilePictureFile);

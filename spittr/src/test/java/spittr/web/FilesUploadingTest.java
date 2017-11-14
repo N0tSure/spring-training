@@ -69,8 +69,8 @@ public class FilesUploadingTest extends AbstractSpittrIntegrationTest {
 
         MockMultipartFile profilePictureFile = new MockMultipartFile(
                 "profilePicture",
-                "foo.jpg",
-                MediaType.MULTIPART_FORM_DATA_VALUE,
+                "foo.jpeg",
+                MediaType.IMAGE_JPEG_VALUE,
                 "foo".getBytes());
 
         mockMvc.perform(
@@ -111,7 +111,12 @@ public class FilesUploadingTest extends AbstractSpittrIntegrationTest {
         ResourceService resourceService = webApplicationContext.getBean(ResourceService.class);
 
         Spitter spitter = repository.save(new Spitter());
-        MultipartFile spitterProfileMultipartFile = new MockMultipartFile("spitterProfile", "foobar".getBytes());
+        MultipartFile spitterProfileMultipartFile = new MockMultipartFile(
+                "spitterProfile",
+                "foo.jpeg",
+                MediaType.IMAGE_JPEG_VALUE,
+                "foobar".getBytes()
+        );
 
         resourceService.saveSpitterProfilePicture(spitter, spitterProfileMultipartFile);
 
