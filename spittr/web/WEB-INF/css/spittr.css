@@ -29,3 +29,7 @@ footer a {
 footer a:hover {
     color: #444444
 }
+
+[hidden] {
+    display: none !important;
+}

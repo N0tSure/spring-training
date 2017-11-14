@@ -15,8 +15,11 @@
 <div th:replace="fragments/header :: header"></div>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <h1 th:text="#{spittr.profile.headler}"></h1>
+        </div>
+        <div class="col-md-4">
+            <img th:src="@{'/images/profile/' + ${fileNamingService.findSpitterProfilePicture(spitter)}}">
         </div>
     </div>
     <div class="row">

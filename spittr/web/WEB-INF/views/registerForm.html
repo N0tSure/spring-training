@@ -15,7 +15,7 @@
 <div th:replace="fragments/header :: header"></div>
 <div class="container">
     <h1 th:text="#{spittr.registerForm.headler}"></h1>
-    <form method="POST" th:object="${spitter}">
+    <form method="POST" th:object="${spitter}" enctype="multipart/form-data">
         <div class="form-group">
             <div class="row" th:classappend="${#fields.hasErrors('firstName')}? 'alert alert-danger'">
                 <div class="col-md-4">
@@ -68,6 +68,23 @@
                 </div>
                 <div class="col-md-8" th:if="${#fields.hasErrors('password')}">
                     <div th:each="error : ${#fields.errors('password')}" th:text="${error}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="profilePicture" class="btn btn-default">
+                        <span>Load profile picture</span>
+                        <input
+                                name="profilePicture"
+                                type="file"
+                                accept="image/jpeg,image/png,image/gif"
+                                class="form-control"
+                                id="profilePicture"
+                                hidden
+                        />
+                    </label>
                 </div>
             </div>
         </div>
