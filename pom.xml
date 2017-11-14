@@ -11,7 +11,7 @@
     <modules>
         <module>media-system</module>
         <module>spittr</module>
-  </modules>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

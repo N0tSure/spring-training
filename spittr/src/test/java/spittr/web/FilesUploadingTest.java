@@ -15,8 +15,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
 import spittr.config.RootConfig;
 import spittr.config.WebConfig;
 import spittr.data.SpitterRepository;
@@ -44,6 +46,7 @@ import static org.junit.Assert.assertTrue;
 @WebAppConfiguration("file:web")
 @ContextConfiguration(classes = {RootConfig.class, WebConfig.class}, loader = AnnotationConfigWebContextLoader.class)
 public class FilesUploadingTest extends AbstractSpittrIntegrationTest {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FilesUploadingTest.class);
 
     private MockMvc mockMvc;
@@ -99,5 +102,25 @@ public class FilesUploadingTest extends AbstractSpittrIntegrationTest {
                 "Loaded file's content not matching expectations",
                 Arrays.equals(savedProfilePictureBytes, profilePictureFile.getBytes())
         );
+    }
+
+
+    @Test
+    public void shouldAccessToUploadedImage() throws Exception {
+        SpitterRepository repository = webApplicationContext.getBean(SpitterRepository.class);
+        ResourceService resourceService = webApplicationContext.getBean(ResourceService.class);
+
+        Spitter spitter = repository.save(new Spitter());
+        MultipartFile spitterProfileMultipartFile = new MockMultipartFile("spitterProfile", "foobar".getBytes());
+
+        resourceService.saveSpitterProfilePicture(spitter, spitterProfileMultipartFile);
+
+        String spitterProfilePictureName = resourceService.findSpitterProfilePicture(spitter);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/images/profile/" + spitterProfilePictureName))
+                .andDo(MockMvcResultHandlers.log())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().bytes("foobar".getBytes()));
+
     }
 }
