@@ -3,6 +3,7 @@ package spittr.data.stub;
 import org.springframework.stereotype.Component;
 import spittr.data.SpitterRepository;
 import spittr.exceptions.DuplicateSpitterUsernameException;
+import spittr.exceptions.SpitterNotFoundException;
 import spittr.model.Spitter;
 
 import java.lang.reflect.Field;
@@ -48,6 +49,9 @@ public class SpitterRepositoryStub implements SpitterRepository {
 
     @Override
     public Spitter findByUsername(String username) {
-        return storage.get(username);
+        if (storage.containsKey(username))
+            return storage.get(username);
+        else
+            throw new SpitterNotFoundException();
     }
 }

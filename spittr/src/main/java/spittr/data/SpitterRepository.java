@@ -1,5 +1,6 @@
 package spittr.data;
 
+import spittr.exceptions.SpitterNotFoundException;
 import spittr.model.Spitter;
 
 /**
@@ -21,5 +22,5 @@ public interface SpitterRepository {
      * @param username spitter's username
      * @return founded spitter
      */
-    Spitter findByUsername(String username);
+    Spitter findByUsername(String username) throws SpitterNotFoundException;
 }
