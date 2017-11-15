@@ -2,6 +2,7 @@ package spittr.data.stub;
 
 import org.springframework.stereotype.Component;
 import spittr.data.SpitterRepository;
+import spittr.exceptions.DuplicateSpitterUsernameException;
 import spittr.model.Spitter;
 
 import java.lang.reflect.Field;
@@ -35,6 +36,10 @@ public class SpitterRepositoryStub implements SpitterRepository {
             idField.set(spitter, id);
         } catch (NoSuchFieldException | IllegalAccessException exc) {
             throw new RuntimeException(exc);
+        }
+
+        if (storage.containsKey(spitter.getUsername())) {
+            throw new DuplicateSpitterUsernameException(spitter.toString());
         }
 
         storage.put(spitter.getUsername(), spitter);

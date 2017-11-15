@@ -3,18 +3,16 @@ package spittr.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
+import spittr.exceptions.DefaultProfilePictureNotFoundException;
+import spittr.exceptions.UnrecognizedPictureTypeException;
 import spittr.model.Spitter;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
-import java.nio.channels.ByteChannel;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -23,6 +21,7 @@ import java.util.Arrays;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Arrays.binarySearch;
 
 /**
  * <p>
@@ -41,8 +40,10 @@ public class ResourceService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResourceService.class);
 
-    private File profilePictureDirectory;
-    private String defaultPictureFileName;
+    private final File profilePictureDirectory;
+    private final String defaultPictureFileName;
+    private final String[] acceptablePictureTypes = "image/jpeg,image/png,image/gif".split(",");
+    private final Charset charset = Charset.forName("UTF-8");
 
     /**
      * Creates instance of {@link ResourceService}
@@ -52,9 +53,10 @@ public class ResourceService {
      * @return ResourceService instance
      * @throws NullPointerException if profilePictureDirectoryURL or defaultPictureFileName is null
      * @throws IllegalStateException if profile picture directory or default picture not exists
+     * @throws DefaultProfilePictureNotFoundException if defaultPictureFile not exists
      */
     public static ResourceService createInstance(
-            final URL profilePictureDirectoryURL, final String defaultPictureFileName) {
+            final URL profilePictureDirectoryURL, final String defaultPictureFileName) throws IOException {
 
         checkNotNull(profilePictureDirectoryURL, "Profile directory URL is null");
         checkNotNull(defaultPictureFileName, "Default picture name is null");
@@ -67,12 +69,9 @@ public class ResourceService {
                 profilePictureDirectory
         );
 
-        // TODO: 14.11.2017 Throw specific exception in this case
-        checkArgument(
-                new File(profilePictureDirectory, defaultPictureFileName).exists(),
-                "Default profile picture: [%s] not found",
-                defaultPictureFileName
-        );
+        if (!new File(profilePictureDirectory, defaultPictureFileName).exists()) {
+            throw new DefaultProfilePictureNotFoundException(defaultPictureFileName);
+        }
 
         return new ResourceService(profilePictureDirectory, defaultPictureFileName);
     }
@@ -114,6 +113,8 @@ public class ResourceService {
      * @param profilePictureMultipartFile received file
      * @throws IOException if I/O errors occurs due saving
      * @throws NullPointerException if spitter is null or spitter's id is null
+     * @throws UnrecognizedPictureTypeException if content type of profilePictureMultipartFile
+     * not in acceptablePictureTypes
      */
     public void saveSpitterProfilePicture(
             final Spitter spitter, final MultipartFile profilePictureMultipartFile) throws IOException {
@@ -128,7 +129,10 @@ public class ResourceService {
                     profilePictureMultipartFile.getBytes().length
             );
 
-            // TODO: 14.11.2017 Check content type
+            if (binarySearch(this.acceptablePictureTypes, profilePictureMultipartFile.getContentType()) < 0) {
+                throw new UnrecognizedPictureTypeException(profilePictureMultipartFile.getContentType());
+            }
+
             String fileName = estimateFileName(spitter);
             String fileExtension = profilePictureMultipartFile.getContentType().split("/")[1];
 
@@ -144,10 +148,10 @@ public class ResourceService {
 
         try {
 
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             String spitterId = String.valueOf(checkNotNull(spitter.getId(), "Spitter's id is null"));
-            // TODO: 09.11.2017 Add java.nio.Charset into build argument
-            byte[] encodedInput = spitterId.getBytes();
+
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            byte[] encodedInput = spitterId.getBytes(this.charset);
             messageDigest.update(encodedInput);
             return DatatypeConverter.printHexBinary(messageDigest.digest());
         } catch (NoSuchAlgorithmException exc) {

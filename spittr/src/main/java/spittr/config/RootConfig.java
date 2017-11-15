@@ -8,6 +8,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import spittr.service.ResourceService;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -29,7 +30,7 @@ public class RootConfig {
     }
 
     @Bean
-    public ResourceService resourceService() throws MalformedURLException {
+    public ResourceService resourceService() throws IOException {
         String profilePictureDirectory = System.getenv("spittr.resources.pictures.profile");
         return ResourceService.createInstance(new URL(profilePictureDirectory), "no_photo.png");
     }
