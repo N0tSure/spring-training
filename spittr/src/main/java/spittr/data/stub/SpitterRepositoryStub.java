@@ -52,6 +52,6 @@ public class SpitterRepositoryStub implements SpitterRepository {
         if (storage.containsKey(username))
             return storage.get(username);
         else
-            throw new SpitterNotFoundException();
+            throw new SpitterNotFoundException(username);
     }
 }

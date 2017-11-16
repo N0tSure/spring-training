@@ -15,4 +15,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Spitter's profile not found")
 public class SpitterNotFoundException extends RuntimeException {
+
+    public SpitterNotFoundException() {
+        super();
+    }
+
+    public SpitterNotFoundException(String message) {
+        super(message);
+    }
+
+    public SpitterNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public SpitterNotFoundException(Throwable cause) {
+        super(cause);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Spitter not found: %s", this.getMessage());
+    }
 }
