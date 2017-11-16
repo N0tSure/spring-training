@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spittr.data.SpitterRepository;
 import spittr.model.Spitter;
 import spittr.service.ResourceService;
@@ -42,10 +43,12 @@ public class SpitterController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String processingRegistration(
+            Model model,
             @RequestPart(name = "profilePicture", required = false) MultipartFile profilePicture,
             @Valid Spitter spitter,
             Errors errors
     ) throws IOException {
+
         if (errors.hasErrors()) {
             return "registerForm";
         }
@@ -53,11 +56,14 @@ public class SpitterController {
         Spitter savedSpitter = repository.save(spitter);
         resourceService.saveSpitterProfilePicture(savedSpitter, profilePicture);
 
-        return "redirect:/spitter/" + spitter.getUsername();
+        model.addAttribute("username", spitter.getUsername());
+
+        return "redirect:/spitter/{username}";
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public String showSpitterProfile(@PathVariable String username, Model model) {
+
         Spitter spitter = repository.findByUsername(username);
         model.addAttribute(spitter);
         model.addAttribute("fileNamingService", resourceService);
